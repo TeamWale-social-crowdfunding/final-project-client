@@ -60,7 +60,7 @@ const SearchForm = () => {
       <div className="relative" ref={searchRef}>
         <input
           type="text"
-          className={` lg:w-[250px] lg:px-10 py-2 border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+          className={`placeholder-transparent lg:placeholder-gray-400 lg:w-[250px] lg:px-10 py-2 border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:lg:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:bg-gray-700 ${
             expanded
               ? "lg:pl-12 w-[280px] lg:pr-8 lg:w-[450px] px-10"
               : "w-[45px]"
@@ -70,7 +70,7 @@ const SearchForm = () => {
           onClick={expandInput}
           onChange={handleSearch}
         />
-        <div className="absolute top-0 left-0 flex items-center pl-[11px] lg:pl-4 h-full">
+        <div className="absolute top-0 right-3 flex items-center pl-[11px] lg:pl-4 h-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className={`h-6 w-6 text-gray-400 transition-all duration-300 ${
