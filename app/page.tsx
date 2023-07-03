@@ -4,7 +4,7 @@ import DefaultLayout from "@/src/layouts/DefaultLayout";
 const index = () => {
   return (
     <DefaultLayout>
-      <Banner></Banner>
+      <></>
     </DefaultLayout>
   );
 };
