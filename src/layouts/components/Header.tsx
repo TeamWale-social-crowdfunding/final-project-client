@@ -17,6 +17,8 @@ import {
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
 import SearchForm from "@/src/components/form/SearchForm";
+import Image from "next/image";
+import logo from "../../assets/img/logo.png";
 
 const products = [
   {
@@ -80,11 +82,7 @@ export default function Example() {
           <div className="flex ">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
+              <Image src={logo} alt="" className="h-12 w-auto" />
             </a>
           </div>
 
@@ -127,11 +125,7 @@ export default function Example() {
             <div className="flex items-center justify-between">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                />
+                <Image src={logo} alt="" className="h-12 w-auto" />
               </a>
               <button
                 type="button"
