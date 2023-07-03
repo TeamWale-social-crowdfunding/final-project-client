@@ -64,7 +64,7 @@ const SearchForm = () => {
             expanded
               ? "lg:pl-12 w-[280px] lg:pr-8 lg:w-[450px] px-10"
               : "w-[45px]"
-          } placeholder-transparent transition-all duration-300`}
+          } placeholder-transparent transition-width duration-300`}
           placeholder="Tìm kiếm"
           id="searchInput"
           onClick={expandInput}

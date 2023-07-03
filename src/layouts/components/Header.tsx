@@ -74,7 +74,7 @@ export default function Example() {
     <div className="relative h-11 z-50 ">
       <header className="fixed bg-white w-full dark:bg-gray-800 ">
         <nav
-          className="mx-auto flex items-center px-6 lg:px-8"
+          className="mx-auto flex items-center px-6 lg:px-8 shadow-sm"
           aria-label="Global"
         >
           <div className="flex ">
@@ -123,7 +123,7 @@ export default function Example() {
           onClose={setMobileMenuOpen}
         >
           <div className="fixed inset-0 z-10" />
-          <Dialog.Panel className=" fixed inset-y-0 right-0 z-[99] w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-800">
+          <Dialog.Panel className=" fixed inset-y-0 right-0 z-[99] w-full overflow-y-auto bg-white px-6 py-6  sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-800">
             <div className="flex items-center justify-between">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
@@ -148,7 +148,7 @@ export default function Example() {
                   <Disclosure as="div" className="-mx-3">
                     {({ open }) => (
                       <>
-                        <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                        <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ">
                           Product
                           <ChevronDownIcon
                             className={classNames(
@@ -158,7 +158,7 @@ export default function Example() {
                             aria-hidden="true"
                           />
                         </Disclosure.Button>
-                        <Disclosure.Panel className="mt-2 space-y-2">
+                        <Disclosure.Panel className="mt-2 space-y-2 ">
                           {[...products, ...callsToAction].map((item) => (
                             <Disclosure.Button
                               key={item.name}
