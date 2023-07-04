@@ -60,10 +60,8 @@ const SearchForm = () => {
       <div className="relative" ref={searchRef}>
         <input
           type="text"
-          className={`placeholder-transparent lg:placeholder-gray-400 lg:w-[250px] lg:px-10 py-2 border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:lg:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:bg-gray-700 ${
-            expanded
-              ? "lg:pl-12 w-[280px] lg:pr-8 lg:w-[450px] px-10"
-              : "w-[45px]"
+          className={`placeholder-transparent text-gray-600 bg-gray-100 lg:placeholder-gray-500 lg:w-[250px] lg:px-5 py-2 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:lg:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:bg-gray-700 ${
+            expanded ? "lg:pl-12 w-[280px] lg:w-[450px]" : "w-[45px]"
           } placeholder-transparent transition-width duration-300`}
           placeholder="Tìm kiếm"
           id="searchInput"
