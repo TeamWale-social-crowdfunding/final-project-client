@@ -19,6 +19,7 @@ import {
 import SearchForm from "@/src/components/form/SearchForm";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
+import { DarkThemeToggle } from "flowbite-react";
 
 const products = [
   {
@@ -193,6 +194,9 @@ export default function Example() {
                   >
                     Log in
                   </a>
+                </div>
+                <div className="py-6">
+                  <DarkThemeToggle></DarkThemeToggle>
                 </div>
               </div>
             </div>
