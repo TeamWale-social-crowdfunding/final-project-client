@@ -11,18 +11,17 @@ const PostCard = () => {
         />
         <div className="">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900 -mt-1 dark:text-white">
-              Brad Adams{" "}
-            </h2>
-            <small className="text-sm text-gray-700 dark:text-white">
-              22h ago
-            </small>
+            <h3 className="text-sm font-semibold text-gray-900 -mt-1 dark:text-white">
+              Brad Adams
+            </h3>
           </div>
-          <p className="text-gray-700 dark:text-white">Joined 12 SEP 2012. </p>
+          <small className="text-sm text-gray-700 dark:text-white">
+            22h ago
+          </small>
         </div>
       </div>
       <div className="">
-        <p className="px-4 py-2 mt-3 text-gray-700 text-sm dark:text-white">
+        <p className="px-4 py-2 text-gray-700 text-sm dark:text-white">
           Lorem ipsum, dolor sit amet conse. Saepe optio minus rem dolor sit
           amet!
         </p>
