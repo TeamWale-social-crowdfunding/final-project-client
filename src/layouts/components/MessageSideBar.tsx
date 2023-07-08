@@ -10,8 +10,8 @@ const MessageSideBar = () => {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <h2 className=" p-3 text-2xl font-bold dark:text-white">Chat</h2>
-          <ul className="space-y-2 font-medium">
+          <h2 className=" p-3 text-xl text-gray-800 dark:text-white">Chat</h2>
+          <ul className=" font-medium">
             <li className="">
               <MessageCard></MessageCard>
             </li>

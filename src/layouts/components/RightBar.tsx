@@ -11,7 +11,7 @@ const RightBar = () => {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <h3 className=" text-gray-800 text-xl bg-gray-50 dark:bg-gray-800 ">
+          <h3 className=" text-gray-800 text-xl bg-gray-50 dark:bg-gray-800 dark:text-white">
             Contact
           </h3>
           <ul className="space-y-2 font-medium">
