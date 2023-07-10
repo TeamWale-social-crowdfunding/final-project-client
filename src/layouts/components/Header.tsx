@@ -74,7 +74,7 @@ export default function Example() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="relative h-11 z-50 ">
+    <div className="relative h-14 z-50 ">
       <header className="fixed bg-white w-full dark:bg-gray-800 ">
         <nav
           className="mx-auto flex items-center px-6 lg:px-8 shadow-sm"
