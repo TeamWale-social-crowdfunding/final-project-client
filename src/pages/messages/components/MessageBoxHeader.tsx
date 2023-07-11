@@ -2,7 +2,7 @@ import React from "react";
 
 const MessageBoxHeader = () => {
   return (
-    <div className="chat-header px-6 py-2 flex flex-row flex-none justify-between items-center shadow bg-white text-gray-800 dark:bg-gray-800 dark:text-white">
+    <div className=" z-20 fixed w-full chat-header px-6 py-2 flex flex-row flex-none justify-between items-center shadow bg-white text-gray-800 dark:bg-gray-800 dark:text-white">
       <div className="flex">
         <div className="w-12 h-12 mr-4 relative flex flex-shrink-0">
           <img
