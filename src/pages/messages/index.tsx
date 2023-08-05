@@ -1,4 +1,3 @@
-import HeaderOnly from "@/src/layouts/HeaderOnly/HeaderOnly";
 import MessageLayout from "@/src/layouts/MessageLayout/MessageLayout";
 import React from "react";
 import MessageBox from "./components/MessageBox";
