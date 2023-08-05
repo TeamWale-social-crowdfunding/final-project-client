@@ -11,12 +11,7 @@ const Login = () => {
   ) => {
     e.preventDefault();
 
-    await loginWithCredentials({
-      email: userInfo.email,
-      password: userInfo.password,
-    });
-
-    const res = await signIn("credentials", {
+    await signIn("credentials", {
       email: userInfo.email,
       password: userInfo.password,
       redirect: false,

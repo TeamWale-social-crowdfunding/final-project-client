@@ -13,7 +13,5 @@ export const loginWithCredentials = async (data: {
     { withCredentials: true }
   );
 
-  console.log(res);
-
   return res;
 };
