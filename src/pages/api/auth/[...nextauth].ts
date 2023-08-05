@@ -44,6 +44,15 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
     pages: {
       signIn: "../../login",
     },
+    events: {
+      async signOut({ token, session }) {
+        res.setHeader("Set-Cookie", [
+          "Authentication=deleted;Max-Age=0;path=/;",
+          "RefreshToken=deleted;Max-Age=0;path=/;",
+          "Roles=deleted;Max-Age=0;path=/;",
+        ]);
+      },
+    },
   };
 };
 
