@@ -1,8 +1,27 @@
-import React from "react";
+import React, { MouseEvent, useState } from "react";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
+import { signIn } from "next-auth/react";
+import { loginWithCredentials } from "@/src/services/authentication/credentialAuth.services";
 
 const Login = () => {
+  const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
+    e.preventDefault();
+
+    await loginWithCredentials({
+      email: userInfo.email,
+      password: userInfo.password,
+    });
+
+    const res = await signIn("credentials", {
+      email: userInfo.email,
+      password: userInfo.password,
+      redirect: false,
+    });
+  };
   return (
     <div>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -28,6 +47,9 @@ const Login = () => {
                     Your email
                   </label>
                   <input
+                    onChange={({ target }) =>
+                      setUserInfo({ ...userInfo, email: target.value })
+                    }
                     type="email"
                     name="email"
                     id="email"
@@ -43,6 +65,9 @@ const Login = () => {
                     Password
                   </label>
                   <input
+                    onChange={({ target }) =>
+                      setUserInfo({ ...userInfo, password: target.value })
+                    }
                     type="password"
                     name="password"
                     id="password"
@@ -77,8 +102,9 @@ const Login = () => {
                   </a>
                 </div>
                 <button
+                  onClick={handleSubmit}
                   type="submit"
-                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Sign in
                 </button>

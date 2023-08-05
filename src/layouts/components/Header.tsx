@@ -20,6 +20,7 @@ import SearchForm from "@/src/components/form/SearchForm";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
 import { DarkThemeToggle } from "flowbite-react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const products = [
   {
@@ -69,6 +70,12 @@ function classNames(...classes: any[]) {
 }
 
 export default function Example() {
+  /**
+   * Session for user authenicate, form next auth
+   */
+  const { data: session, status } = useSession();
+  console.log(status);
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
@@ -188,12 +195,21 @@ export default function Example() {
                   </a>
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    Log in
-                  </a>
+                  {session ? (
+                    <button
+                      onClick={() => signOut()}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      Sign out
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => signIn()}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      Sign in
+                    </button>
+                  )}
                 </div>
                 <div className="py-6">
                   <DarkThemeToggle></DarkThemeToggle>
