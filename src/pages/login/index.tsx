@@ -1,10 +1,21 @@
-import React, { MouseEvent, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
-import { signIn } from "next-auth/react";
-import { loginWithCredentials } from "@/src/services/authentication/credentialAuth.services";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { from, of } from "rxjs";
 
 const Login = () => {
+  /**
+   * Session for user authenicate, form next auth
+   */
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  if (status == "authenticated") {
+    router.push("/");
+  }
+
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async (
     e

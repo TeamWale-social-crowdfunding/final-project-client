@@ -21,6 +21,7 @@ import Image from "next/image";
 import logo from "../../assets/img/logo.png";
 import { DarkThemeToggle } from "flowbite-react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const products = [
   {
@@ -75,6 +76,8 @@ export default function Example() {
    */
   const { data: session, status } = useSession();
   console.log(status);
+
+  const router = useRouter();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -204,7 +207,7 @@ export default function Example() {
                     </button>
                   ) : (
                     <button
-                      onClick={() => signIn()}
+                      onClick={() => router.push("/login")}
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       Sign in
