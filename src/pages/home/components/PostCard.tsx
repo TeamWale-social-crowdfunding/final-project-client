@@ -1,6 +1,8 @@
+import { PostPropI } from "@/src/context/model/posts.model";
+import { getTimeDiffString } from "@/src/utils/createdDayTransform";
 import React from "react";
 
-const PostCard = () => {
+const PostCard = (postData: { data: PostPropI }) => {
   return (
     <div className="flex flex-col bg-white dark:bg-gray-800 shadow-lg rounded-lg mx-4 md:mx-auto mb-10 max-w-md md:max-w-2xl ">
       <div className="flex items-start px-4 pt-4">
@@ -12,11 +14,13 @@ const PostCard = () => {
         <div className="">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-gray-900 -mt-1 dark:text-white">
-              Brad Adams
+              {postData.data.user_id.firstName +
+                " " +
+                postData.data.user_id.lastName}
             </h3>
           </div>
           <small className="text-sm text-gray-700 dark:text-white">
-            22h ago
+            {getTimeDiffString(postData.data.createdAt)}
           </small>
         </div>
       </div>
