@@ -1,4 +1,4 @@
-import { PostPropI } from "@/src/context/model/posts.model";
+import { PostPropI } from "@/src/context/model/post.model";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
 import React from "react";
 

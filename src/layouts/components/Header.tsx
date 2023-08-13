@@ -22,6 +22,9 @@ import logo from "../../assets/img/logo.png";
 import { DarkThemeToggle } from "flowbite-react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import { defaultAvatar } from "@/src/constants";
+import { AuthHttpService } from "@/src/services/authentication/httpAuth.service";
+import { UserPropI } from "@/src/context/model/user.model";
 
 const products = [
   {
@@ -75,13 +78,21 @@ export default function Example() {
    * Session for user authenicate, form next auth
    */
   const { data: session, status } = useSession();
-  console.log(status);
-
+  const [currentUser, setCurrentUser] = useState<any>({});
+  const authHttpService = new AuthHttpService();
   const router = useRouter();
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  useEffect(() => {
+    if (session) {
+      authHttpService.getCurrentUser().subscribe((data) => {
+        setCurrentUser(data);
+      });
+    }
+  }, [session]);
 
-  const [expanded, setExpanded] = useState(false);
+  console.log(currentUser);
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="relative h-14 z-50 ">
@@ -101,16 +112,22 @@ export default function Example() {
           <div className="flex flex-1"></div>
 
           <div className="hidden lg:flex m-4 ">
-            <a
-              href="#"
-              className="text-sm font-semibold leading-6 text-gray-900  dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            {session ? (
+              <p className="text-sm font-semibold leading-6 text-gray-900  dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                {"Hi " + currentUser.lastName}
+              </p>
+            ) : (
+              <button
+                onClick={() => router.push("/login")}
+                className="text-sm font-semibold leading-6 text-gray-900  dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </button>
+            )}
           </div>
           <img
             className="w-10 h-10 rounded-full mx-3"
-            src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+            src={session ? currentUser.avatar : defaultAvatar}
             alt="Rounded avatar"
           />
 
