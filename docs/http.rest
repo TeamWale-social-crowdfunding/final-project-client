@@ -1,0 +1,2 @@
+###
+GET http://localhost:3002/posts/public-posts?page=1&size=50
