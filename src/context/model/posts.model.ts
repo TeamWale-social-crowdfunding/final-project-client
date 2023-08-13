@@ -5,6 +5,7 @@ export interface PostPropI {
     firstName: string;
     lastName: string;
     _id: string;
+    avatar: string;
   };
 
   content: string;
