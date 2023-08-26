@@ -83,6 +83,8 @@ export default function Example() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log("user");
+    console.log(session?.user);
     if (session) {
       authHttpService.getCurrentUser().subscribe((data) => {
         setCurrentUser(data);

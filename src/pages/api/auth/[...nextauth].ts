@@ -2,6 +2,7 @@ import { loginWithCredentials } from "../../../services/authentication/credentia
 import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 type NextAuthOptionsCallback = (
   req: NextApiRequest,
@@ -40,6 +41,11 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
           }
         },
       }),
+      GoogleProvider({
+        name: "google",
+        clientId: process.env.GOOGLE_ID as string,
+        clientSecret: process.env.GOOGLE_SECRET as string,
+      }),
     ],
     pages: {
       signIn: "../../login",
@@ -51,6 +57,18 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
           "RefreshToken=deleted;Max-Age=0;path=/;",
           "Roles=deleted;Max-Age=0;path=/;",
         ]);
+      },
+    },
+    callbacks: {
+      async signIn({ account, profile }) {
+        if (account?.provider === "google") {
+          console.log(account);
+          console.log(profile);
+          if (profile?.email !== "quocldgcd191316@fpt.edu.vn") {
+            return false;
+          }
+        }
+        return true; // Do different verification for other providers that don't have `email_verified`
       },
     },
   };
