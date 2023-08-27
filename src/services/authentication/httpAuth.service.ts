@@ -6,10 +6,6 @@ export class AuthHttpService extends HttpService {
     super("http://localhost:3001");
   }
 
-  googleAuth(data: GoogleAuthDto) {
-    return this.post("auth/google-auth", { data }, { withCredentials: true });
-  }
-
   getCurrentUser() {
     return this.get("/auth/users/current", { withCredentials: true });
   }

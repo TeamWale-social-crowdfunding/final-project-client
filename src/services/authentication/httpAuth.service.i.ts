@@ -1,11 +1,11 @@
 export interface GoogleAuthDto {
-  email: string;
+  email: any;
 
-  firstName: string;
+  firstName: any;
 
-  lastName: string;
+  lastName: any;
 
-  googleId: string;
+  googleId: any;
 
-  avatar: string;
+  avatar: any;
 }

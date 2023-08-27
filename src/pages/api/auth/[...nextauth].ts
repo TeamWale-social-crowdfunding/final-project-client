@@ -1,8 +1,12 @@
-import { loginWithCredentials } from "../../../services/authentication/credentialAuth.services";
+import {
+  googleAuth,
+  loginWithCredentials,
+} from "../../../services/authentication/credentialAuth.services";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import jwt_decode from "jwt-decode";
 
 type NextAuthOptionsCallback = (
   req: NextApiRequest,
@@ -33,10 +37,8 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
           }
 
           if ((resp.status = 201)) {
-            console.log("success");
             return resp.data;
           } else {
-            console.log("check your credentials");
             return null;
           }
         },
@@ -62,13 +64,25 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
     callbacks: {
       async signIn({ account, profile }) {
         if (account?.provider === "google") {
-          console.log(account);
-          console.log(profile);
-          if (profile?.email !== "quocldgcd191316@fpt.edu.vn") {
+          const userDecoded: any = await jwt_decode(String(account.id_token));
+          const resp = await googleAuth({
+            email: String(userDecoded.email),
+            firstName: String(userDecoded.given_name),
+            lastName: String(userDecoded.family_name),
+            googleId: account.providerAccountId,
+            avatar: String(userDecoded.picture),
+          });
+
+          const cookiesFromResponse = resp.headers["set-cookie"];
+
+          if (cookiesFromResponse != undefined) {
+            res.setHeader("Set-Cookie", cookiesFromResponse);
+          }
+          if (resp.status == 401) {
             return false;
           }
         }
-        return true; // Do different verification for other providers that don't have `email_verified`
+        return true;
       },
     },
   };
