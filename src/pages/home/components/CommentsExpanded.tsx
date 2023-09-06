@@ -2,7 +2,7 @@ import React from "react";
 
 const CommentsExpanded = () => {
   return (
-    <section className="bg-white dark:bg-gray-900 antialiased">
+    <section className="antialiased">
       <div className="max-w-2xl mx-auto px-4">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-md font-bold text-gray-900 dark:text-white">

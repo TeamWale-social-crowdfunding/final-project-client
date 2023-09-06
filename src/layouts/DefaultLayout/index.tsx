@@ -8,9 +8,9 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
     <div>
       <Header></Header>
       <div className="flex">
-        <SideBar></SideBar>
+        {/* <SideBar></SideBar> */}
         {children}
-        <RightBar></RightBar>
+        {/* <RightBar></RightBar> */}
       </div>
     </div>
   );

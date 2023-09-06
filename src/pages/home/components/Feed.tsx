@@ -2,6 +2,7 @@ import { postsPerPage } from "@/src/constants";
 import { PostPropI } from "@/src/context/model/post.model";
 import { FeedHttpService } from "@/src/services/newfeed/httpFeed.service";
 import React, { useEffect, useState } from "react";
+import NewPost from "./NewPost";
 import PostCard from "./PostCard";
 
 const Feed = () => {
@@ -45,6 +46,7 @@ const Feed = () => {
 
   return (
     <div>
+      <NewPost></NewPost>
       {feedPosts.map((post: PostPropI, index: number) => (
         <PostCard data={post} key={post._id}></PostCard>
       ))}

@@ -19,12 +19,11 @@ import {
 import SearchForm from "@/src/components/form/SearchForm";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
-import { DarkThemeToggle } from "flowbite-react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { defaultAvatar } from "@/src/constants";
 import { AuthHttpService } from "@/src/services/authentication/httpAuth.service";
-import { UserPropI } from "@/src/context/model/user.model";
+import ButtonDarkMode from "@/src/components/ui/DarkModeButton";
 
 const products = [
   {
@@ -97,10 +96,10 @@ export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative h-14 z-50 ">
-      <header className="fixed bg-white w-full dark:bg-gray-800 ">
+    <div className="relative h-20 z-50 ">
+      <header className="fixed bg-white w-full dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-80 backdrop-blur-xl ">
         <nav
-          className="mx-auto flex items-center px-6 lg:px-8 shadow-sm"
+          className="mx-auto flex items-center h-20 px-3 lg:px-36"
           aria-label="Global"
         >
           <div className="flex ">
@@ -110,23 +109,8 @@ export default function Example() {
             </a>
           </div>
 
-          <SearchForm></SearchForm>
           <div className="flex flex-1"></div>
 
-          <div className="hidden lg:flex m-4 ">
-            {session ? (
-              <p className="text-sm font-semibold leading-6 text-gray-900  dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                {"Hi " + currentUser.lastName}
-              </p>
-            ) : (
-              <button
-                onClick={() => router.push("/login")}
-                className="text-sm font-semibold leading-6 text-gray-900  dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                Log in <span aria-hidden="true">&rarr;</span>
-              </button>
-            )}
-          </div>
           <img
             className="w-10 h-10 rounded-full mx-3"
             src={session ? currentUser.avatar : defaultAvatar}
@@ -140,7 +124,7 @@ export default function Example() {
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="sr-only">Open main menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+              <Bars3Icon className="h-8 w-8" aria-hidden="true" />
             </button>
           </div>
         </nav>
@@ -234,7 +218,7 @@ export default function Example() {
                   )}
                 </div>
                 <div className="py-6">
-                  <DarkThemeToggle></DarkThemeToggle>
+                  <ButtonDarkMode></ButtonDarkMode>
                 </div>
               </div>
             </div>
