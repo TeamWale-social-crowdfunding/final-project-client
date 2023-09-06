@@ -4,7 +4,6 @@ import React from "react";
 import CommentsExpanded from "./CommentsExpanded";
 
 const PostCard = (postData: { data: PostPropI }) => {
-  console.log("🚀 ~ file: PostCard.tsx:6 ~ postData:", postData);
   return (
     <div className="flex flex-col mb-10 lg:px-0 px-4 ">
       <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
@@ -18,6 +17,7 @@ const PostCard = (postData: { data: PostPropI }) => {
           }
           alt="avatar"
         />
+
         <div className="">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-gray-900 -mt-1 dark:text-white">
@@ -30,20 +30,17 @@ const PostCard = (postData: { data: PostPropI }) => {
             </small>
           </div>
 
-          <div className="">
+          <div className="relative">
+            <div className=" absolute w-[2px] h-[90%] bg-gray-200 dark:bg-gray-700 left-[-30px] top-7"></div>
             <p className=" text-gray-700 mb-2 text-sm dark:text-white">
               {postData.data.content}
             </p>
             <div>
               {postData.data.media?.map((media, index): any => {
-                console.log(
-                  "🚀 ~ file: PostCard.tsx:37 ~ {postData.data.media?.map ~ media.url:",
-                  media.url
-                );
                 return (
                   <img
                     key={index}
-                    className="max-h-[700px] w-auto max-w-full mb-2 rounded-xl"
+                    className="max-h-[462px] w-auto max-w-full mb-2 rounded-xl"
                     src={media.url}
                     alt="image description"
                   />

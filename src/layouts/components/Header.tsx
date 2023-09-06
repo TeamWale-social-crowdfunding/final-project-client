@@ -105,7 +105,11 @@ export default function Example() {
           <div className="flex ">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <Image src={logo} alt="" className="h-12 w-auto" />
+              <Image
+                src={logo}
+                alt=""
+                className="h-14 w-auto hover:scale-105 ease-in duration-100"
+              />
             </a>
           </div>
 

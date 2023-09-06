@@ -31,7 +31,7 @@ const Feed = () => {
   useEffect(() => {
     const handleScroll = () => {
       const isAtBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight;
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 20;
       if (isAtBottom) {
         loadMore();
       }
