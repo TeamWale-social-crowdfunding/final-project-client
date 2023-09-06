@@ -1,6 +1,7 @@
 import { PostPropI } from "@/src/context/model/post.model";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
 import React from "react";
+import CommentsExpanded from "./CommentsExpanded";
 
 const PostCard = (postData: { data: PostPropI }) => {
   console.log("🚀 ~ file: PostCard.tsx:6 ~ postData:", postData);
@@ -100,6 +101,8 @@ const PostCard = (postData: { data: PostPropI }) => {
             <span>share</span>
           </div>
         </div>
+
+        <CommentsExpanded></CommentsExpanded>
       </div>
     </div>
   );
