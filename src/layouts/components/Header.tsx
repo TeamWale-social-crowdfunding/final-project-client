@@ -208,7 +208,6 @@ export default function Example() {
                   />
                 </svg>
               </button>
-              \
             </Link>
 
             <Link href="/profile" className="w-[20%] h-full">

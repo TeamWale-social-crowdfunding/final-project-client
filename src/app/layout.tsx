@@ -17,14 +17,14 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css"
           rel="stylesheet"
         />
       </head>
       <body className={inter.className}>
         <div className=" relative bg-red-500 w-64 h-64"></div>
         {children}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
       </body>
     </html>
   );
