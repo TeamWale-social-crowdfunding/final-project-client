@@ -1,3 +1,4 @@
+import MediaGallery from "@/src/components/ui/MediaGallery";
 import { PostPropI } from "@/src/context/model/post.model";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
 import React from "react";
@@ -35,17 +36,11 @@ const Post = (postData: { data: PostPropI }) => {
             <p className=" text-gray-700 mb-2 text-sm dark:text-white">
               {postData.data.content}
             </p>
+
             <div>
-              {postData.data.media?.map((media, index): any => {
-                return (
-                  <img
-                    key={index}
-                    className="max-h-[462px] w-auto max-w-full mb-2 rounded-xl"
-                    src={media.url}
-                    alt="image description"
-                  />
-                );
-              })}
+              {postData.data.media && (
+                <MediaGallery data={postData.data.media}></MediaGallery>
+              )}
             </div>
 
             <div className="flex items-center">

@@ -72,10 +72,10 @@ const Gallery = (galleryData: {
         </svg>
       </button>
 
-      <Slider ref={sliderRef} {...settings} className=" max-w-[572px] mb-2">
+      <Slider ref={sliderRef} {...settings} className="w-[522px] mb-2">
         {galleryData.data.map((media, key) => (
           <div key={key} className="">
-            <div className="">
+            <div className="pr-2">
               <img
                 className="max-h-[462px] w-auto max-w-full rounded-xl m-0"
                 src={media.url}
