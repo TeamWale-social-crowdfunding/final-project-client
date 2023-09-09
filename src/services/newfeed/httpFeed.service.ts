@@ -9,4 +9,8 @@ export class FeedHttpService extends HttpService {
   getPublicPosts(page: number, size: number): Observable<any> {
     return this.get(`posts/public-posts?page=${page}&size=${size}`);
   }
+
+  getPost(postId?: string): Observable<any> {
+    return this.get(`posts/get-post?postId=${postId}`);
+  }
 }
