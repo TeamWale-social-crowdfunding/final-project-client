@@ -1,6 +1,7 @@
 import { PostPropI } from "@/src/context/model/post.model";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
 import React from "react";
+import Comments from "./Comments";
 
 const Post = (postData: { data: PostPropI }) => {
   return (
@@ -107,6 +108,7 @@ const Post = (postData: { data: PostPropI }) => {
           </div>
         </div>
       </div>
+      <Comments></Comments>
     </div>
   );
 };

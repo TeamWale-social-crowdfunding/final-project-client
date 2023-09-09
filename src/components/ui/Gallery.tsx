@@ -3,7 +3,9 @@ import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Gallery = () => {
+const Gallery = (galleryData: {
+  data: { type: string; url: string; key: string }[];
+}) => {
   const settings: Settings = {
     dots: false,
     infinite: false,
@@ -70,61 +72,18 @@ const Gallery = () => {
         </svg>
       </button>
 
-      <Slider ref={sliderRef} {...settings} className=" max-w-[572px]">
-        <div className="">
-          <div className="pr-3">
-            <img
-              className="max-h-[462px] w-auto max-w-full mb-2 rounded-xl"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80"
-              alt=""
-            />
+      <Slider ref={sliderRef} {...settings} className=" max-w-[572px] mb-2">
+        {galleryData.data.map((media, key) => (
+          <div key={key} className="">
+            <div className="">
+              <img
+                className="max-h-[462px] w-auto max-w-full rounded-xl m-0"
+                src={media.url}
+                alt=""
+              />
+            </div>
           </div>
-        </div>
-        <div className="">
-          <div className="pr-3">
-            <img
-              className="max-h-[462px] w-auto max-w-full mb-2 rounded-xl"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="">
-          <div className="pr-3">
-            <img
-              className="max-h-[462px] w-auto max-w-full mb-2 rounded-xl"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="">
-          <div className="pr-3">
-            <img
-              className="max-h-[462px] w-auto max-w-full mb-2 rounded-xl"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="">
-          <div className="pr-3">
-            <img
-              className="max-h-[462px] w-auto max-w-full mb-2 rounded-xl"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="">
-          <div className="pr-3">
-            <img
-              className="max-h-[462px] w-auto max-w-full mb-2 rounded-xl"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80"
-              alt=""
-            />
-          </div>
-        </div>
+        ))}
       </Slider>
     </div>
   );
