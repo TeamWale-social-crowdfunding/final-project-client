@@ -1,4 +1,4 @@
-import HeaderOnly from "@/src/layouts/HeaderOnly/HeaderOnly";
+import DefaultLayout from "@/src/layouts/DefaultLayout";
 import React, { useState } from "react";
 
 const Profile = () => {
@@ -14,7 +14,7 @@ const Profile = () => {
   };
 
   return (
-    <HeaderOnly>
+    <DefaultLayout>
       <div className=" w-full ">
         <div className=" flex items-center justify-center  ">
           <div className=" w-full max-w-[572px]">
@@ -125,7 +125,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </HeaderOnly>
+    </DefaultLayout>
   );
 };
 

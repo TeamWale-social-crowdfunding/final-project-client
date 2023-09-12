@@ -1,50 +1,24 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import { useEffect, useState } from "react";
+import { Dialog, Disclosure } from "@headlessui/react";
 import {
   ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
   SquaresPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
 } from "@heroicons/react/20/solid";
-import SearchForm from "@/src/components/form/SearchForm";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { defaultAvatar } from "@/src/constants";
 import { AuthHttpService } from "@/src/services/authentication/httpAuth.service";
 import ButtonDarkMode from "@/src/components/ui/DarkModeButton";
 import Link from "next/link";
 
 const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
   {
     name: "Integrations",
     description: "Connect with third-party tools",
@@ -58,11 +32,6 @@ const products = [
     icon: ArrowPathIcon,
   },
 ];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
-
 interface SearchResult {
   id: number;
   title: string;
@@ -112,12 +81,6 @@ export default function Example() {
 
           <div className="flex flex-1"></div>
 
-          {/* <img
-            className="w-10 h-10 rounded-full mx-3"
-            src={session ? currentUser.avatar : defaultAvatar}
-            alt="Rounded avatar"
-          /> */}
-
           <div
             className="inline-flex rounded-md h-full w-[450px] justify-center fixed right-[50%] translate-x-[50%]"
             role="group"
@@ -144,7 +107,7 @@ export default function Example() {
               </button>
             </Link>
 
-            <Link href="/" className="w-[20%] h-full">
+            <Link href="/search" className="w-[20%] h-full">
               <button
                 type="button"
                 className="inline-flex w-full h-full justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 bold rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
@@ -296,7 +259,7 @@ export default function Example() {
                           />
                         </Disclosure.Button>
                         <Disclosure.Panel className="mt-2 space-y-2 ">
-                          {[...products, ...callsToAction].map((item) => (
+                          {[...products].map((item) => (
                             <Disclosure.Button
                               key={item.name}
                               as="a"
@@ -316,18 +279,8 @@ export default function Example() {
                   >
                     Features
                   </a>
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    Marketplace
-                  </a>
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    Company
-                  </a>
+
+                  <ButtonDarkMode></ButtonDarkMode>
                 </div>
                 <div className="py-6">
                   {session ? (
@@ -347,7 +300,6 @@ export default function Example() {
                   )}
                 </div>
                 <div className="py-6">
-                  <ButtonDarkMode></ButtonDarkMode>
                 </div>
               </div>
             </div>
