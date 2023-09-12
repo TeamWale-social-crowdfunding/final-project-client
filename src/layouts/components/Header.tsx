@@ -28,24 +28,6 @@ import Link from "next/link";
 
 const products = [
   {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
     name: "Integrations",
     description: "Connect with third-party tools",
     href: "#",
@@ -58,11 +40,6 @@ const products = [
     icon: ArrowPathIcon,
   },
 ];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
-
 interface SearchResult {
   id: number;
   title: string;
@@ -111,12 +88,6 @@ export default function Example() {
           </div>
 
           <div className="flex flex-1"></div>
-
-          {/* <img
-            className="w-10 h-10 rounded-full mx-3"
-            src={session ? currentUser.avatar : defaultAvatar}
-            alt="Rounded avatar"
-          /> */}
 
           <div
             className="inline-flex rounded-md h-full w-[450px] justify-center fixed right-[50%] translate-x-[50%]"
@@ -296,7 +267,7 @@ export default function Example() {
                           />
                         </Disclosure.Button>
                         <Disclosure.Panel className="mt-2 space-y-2 ">
-                          {[...products, ...callsToAction].map((item) => (
+                          {[...products].map((item) => (
                             <Disclosure.Button
                               key={item.name}
                               as="a"
@@ -316,18 +287,8 @@ export default function Example() {
                   >
                     Features
                   </a>
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    Marketplace
-                  </a>
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    Company
-                  </a>
+
+                  <ButtonDarkMode></ButtonDarkMode>
                 </div>
                 <div className="py-6">
                   {session ? (
@@ -347,7 +308,6 @@ export default function Example() {
                   )}
                 </div>
                 <div className="py-6">
-                  <ButtonDarkMode></ButtonDarkMode>
                 </div>
               </div>
             </div>
