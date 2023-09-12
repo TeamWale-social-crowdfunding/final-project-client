@@ -1,23 +1,40 @@
 import HeaderOnly from "@/src/layouts/HeaderOnly/HeaderOnly";
-import React from "react";
+import React, { useState } from "react";
 
 const Profile = () => {
+  const handleChangeAvatar = () => {
+    console.log("change avatar");
+  };
+
+  const [menuProfile, setMenuProfile] = useState("posts");
+  const handleClickMenu = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setMenuProfile(event.currentTarget.value);
+  };
+
   return (
     <HeaderOnly>
       <div className=" w-full ">
         <div className=" flex items-center justify-center  ">
           <div className=" w-full max-w-[572px]">
-            <div>
+            <div className="mb-4">
               <div className="flex text-black">
                 <div className="flex flex-col justify-between">
                   <div>
-                    <h2 className=" font-bold text-[24px] text-gray-700 dark:text-white">Quốc Lê</h2>
-                    <p className="text-gray-900 mb-2 text-lg dark:text-white">quoc_ld</p>
+                    <h2 className=" font-bold text-[24px] text-gray-700 dark:text-white">
+                      Quốc Lê
+                    </h2>
+                    <p className="text-gray-900 mb-2 text-lg dark:text-white">
+                      quoc_ld
+                    </p>
                   </div>
-                  <p className="text-gray-900 mb-2 text-md dark:text-white">biobiobiobiboboibibbibo</p>
+                  <p className="text-gray-900 mb-2 text-md dark:text-white">
+                    biobiobiobiboboibibbibo
+                  </p>
                 </div>
                 <div className="flex-1"></div>
-                <div className="">
+                <button className="" onClick={handleChangeAvatar}>
                   <img
                     className="w-28 h-28 rounded-full object-cover mr-2 shadow"
                     src={
@@ -25,7 +42,7 @@ const Profile = () => {
                     }
                     alt="avatar"
                   />
-                </div>
+                </button>
               </div>
               <div className="flex content-center items-center">
                 <div className="flex mr-1 -space-x-3 content-center items-center">
@@ -51,8 +68,59 @@ const Profile = () => {
                     +3
                   </a>
                 </div>
-                <p className=" text-gray-500 mb-2 text-sm dark:text-white">1M follower</p>
+                <p className=" text-gray-500 text-sm dark:text-white">
+                  1M follower
+                </p>
               </div>
+            </div>
+            <div className="w-full">
+              <div className="inline-flex shadow-sm w-full" role="group">
+                <button
+                  onClick={(event) => {
+                    handleClickMenu(event);
+                  }}
+                  value={"posts"}
+                  type="button"
+                  className={`border-b-2 ${
+                    menuProfile == "posts" && "border-b-gray-500"
+                  } w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border hover:bg-gray-100 hover:text-black-700 focus:none dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white`}
+                >
+                  Posts
+                </button>
+                <button
+                  onClick={(event) => {
+                    handleClickMenu(event);
+                  }}
+                  value={"replies"}
+                  type="button"
+                  className={`border-b-2 ${
+                    menuProfile == "replies" && "border-b-gray-500"
+                  } w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t hover:bg-gray-100 hover:text-black-700 focus:none dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white`}
+                >
+                  Replies
+                </button>
+                <button
+                  onClick={(event) => {
+                    handleClickMenu(event);
+                  }}
+                  value={"reposts"}
+                  type="button"
+                  className={`border-b-2 ${
+                    menuProfile == "reposts" && "border-b-gray-500"
+                  } w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border hover:bg-gray-100 hover:text-black-700 focus:none dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white`}
+                >
+                  Reposts
+                </button>
+              </div>
+            </div>
+            <div className="text-black">
+              {menuProfile == "replies" ? (
+                <div>Replies....</div>
+              ) : menuProfile == "reposts" ? (
+                <div>Reposts...</div>
+              ) : (
+                <div>Posts...</div>
+              )}
             </div>
           </div>
         </div>
