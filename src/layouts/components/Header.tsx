@@ -1,27 +1,19 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import { useEffect, useState } from "react";
+import { Dialog, Disclosure } from "@headlessui/react";
 import {
   ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
   SquaresPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
 } from "@heroicons/react/20/solid";
-import SearchForm from "@/src/components/form/SearchForm";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { defaultAvatar } from "@/src/constants";
 import { AuthHttpService } from "@/src/services/authentication/httpAuth.service";
 import ButtonDarkMode from "@/src/components/ui/DarkModeButton";
 import Link from "next/link";
@@ -115,7 +107,7 @@ export default function Example() {
               </button>
             </Link>
 
-            <Link href="/" className="w-[20%] h-full">
+            <Link href="/search" className="w-[20%] h-full">
               <button
                 type="button"
                 className="inline-flex w-full h-full justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 bold rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
