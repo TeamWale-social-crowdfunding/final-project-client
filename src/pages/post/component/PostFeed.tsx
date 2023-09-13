@@ -1,3 +1,5 @@
+import { mockComments } from "@/src/constants/mockComments";
+import { mockPost } from "@/src/constants/mockPost";
 import { PostPropI } from "@/src/context/model/post.model";
 import { FeedHttpService } from "@/src/services/newfeed/httpFeed.service";
 import { useRouter } from "next/router";
@@ -7,12 +9,14 @@ const PostFeed = () => {
   const router = useRouter();
 
   const feedApiService = new FeedHttpService();
-  const [feedPost, setFeedPost] = useState<PostPropI>();
+  const [feedPost, setFeedPost] = useState<PostPropI>(mockPost);
 
   useEffect(() => {
     const { postId } = router.query;
     feedApiService.getPost(String(postId)).subscribe((data) => {
-      setFeedPost(data);
+      if (data) {
+        setFeedPost(data);
+      }
     });
   }, [router.query]);
 
