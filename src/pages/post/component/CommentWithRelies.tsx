@@ -1,9 +1,12 @@
 import { mockAvatarUser } from "@/src/constants/mockAvatarUser";
 import React from "react";
 
-const CommentWithRelies = () => {
+const CommentWithRelies = (commentWithReliesData: {data: any}) => {
   return (
     <div>
+      <div className=" text-blue-800">
+        {commentWithReliesData.data.content? "YES": "NO"}
+      </div>
       <div className="flex flex-col lg:px-0 ">
         <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
         <div className="flex items-start pt-4">
