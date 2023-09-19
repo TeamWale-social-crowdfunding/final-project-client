@@ -2,10 +2,21 @@ import MediaGallery from "@/src/components/ui/MediaGallery";
 import { mockComments } from "@/src/constants/mockComments";
 import { PostPropI } from "@/src/context/model/post.model";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Comments from "./Comments";
+import { FeedHttpService } from "@/src/services/newfeed/httpFeed.service";
 
 const Post = (postData: { data: PostPropI }) => {
+  const feedApiService = new FeedHttpService();
+
+  const [comments, setComments] = useState()
+
+  useEffect(() => {
+    feedApiService.getAllPostCommets(postData.data._id).subscribe((data) => {
+      setComments(data)
+    })
+  },[])
+
   return (
     <div className="flex flex-col mb-10 lg:px-0 px-4 ">
       <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
@@ -101,7 +112,7 @@ const Post = (postData: { data: PostPropI }) => {
           {`${postData.data.likes?.length} likes`}{" "}
         </div>
       </div>
-      <Comments data={mockComments}></Comments>
+      <Comments data={comments}></Comments>
     </div>
   );
 };

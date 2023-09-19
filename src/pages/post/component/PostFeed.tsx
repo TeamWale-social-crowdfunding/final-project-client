@@ -9,7 +9,7 @@ const PostFeed = () => {
   const router = useRouter();
 
   const feedApiService = new FeedHttpService();
-  const [feedPost, setFeedPost] = useState<PostPropI>(mockPost);
+  const [feedPost, setFeedPost] = useState<PostPropI>();
 
   useEffect(() => {
     const { postId } = router.query;
