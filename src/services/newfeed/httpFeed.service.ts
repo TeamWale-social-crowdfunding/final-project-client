@@ -13,4 +13,12 @@ export class FeedHttpService extends HttpService {
   getPost(postId?: string): Observable<any> {
     return this.get(`posts/get-post?postId=${postId}`);
   }
+
+  getAllPostCommets(postId?: string):Observable<any>{
+    return this.get(`comments/all-post-comments?postId=${postId}`);
+  }
+
+  getProfilePosts(userId?: string):Observable<any>{
+    return this.get(`posts/profile-posts?userId=${userId}`);
+  }
 }

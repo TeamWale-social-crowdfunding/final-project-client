@@ -1,12 +1,28 @@
 import DefaultLayout from "@/src/layouts/DefaultLayout";
-import React, { useState } from "react";
+import { AuthHttpService } from "@/src/services/authentication/httpAuth.service";
+import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
+import ProfilePosts from "./components/ProfilePosts";
 
 const Profile = () => {
+  const authHttpService = new AuthHttpService();
+  const [currentUser, setCurrentUser]: any = useState();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      authHttpService.getCurrentUser().subscribe((data) => {
+        setCurrentUser(data);
+      });
+    }
+  }, [session]);
+
   const handleChangeAvatar = () => {
     console.log("change avatar");
   };
 
   const [menuProfile, setMenuProfile] = useState("posts");
+
   const handleClickMenu = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -17,20 +33,20 @@ const Profile = () => {
     <DefaultLayout>
       <div className=" w-full ">
         <div className=" flex items-center justify-center  ">
-          <div className=" w-full max-w-[572px]">
+          {currentUser && <div className=" w-full max-w-[572px]">
             <div className="mb-4">
               <div className="flex text-black">
                 <div className="flex flex-col justify-between">
                   <div>
                     <h2 className=" font-bold text-[24px] text-gray-700 dark:text-white">
-                      Quốc Lê
+                      {currentUser.firstName + " " + currentUser.lastName}
                     </h2>
                     <p className="text-gray-900 mb-2 text-lg dark:text-white">
-                      quoc_ld
+                      {currentUser.email}
                     </p>
                   </div>
                   <p className="text-gray-900 mb-2 text-md dark:text-white">
-                    biobiobiobiboboibibbibo
+                    {currentUser.bio}
                   </p>
                 </div>
                 <div className="flex-1"></div>
@@ -38,7 +54,9 @@ const Profile = () => {
                   <img
                     className="w-28 h-28 rounded-full object-cover mr-2 shadow"
                     src={
-                      "https://images.unsplash.com/photo-1694024259321-8822933a2366?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80"
+                      currentUser.avatar
+                        ? currentUser.avatar
+                        : "https://images.unsplash.com/photo-1694024259321-8822933a2366?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80"
                     }
                     alt="avatar"
                   />
@@ -119,10 +137,10 @@ const Profile = () => {
               ) : menuProfile == "reposts" ? (
                 <div>Reposts...</div>
               ) : (
-                <div>Posts...</div>
+                <div><ProfilePosts data={currentUser._id}></ProfilePosts></div>
               )}
             </div>
-          </div>
+          </div>}
         </div>
       </div>
     </DefaultLayout>
