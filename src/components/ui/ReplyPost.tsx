@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import MediaGallery from "./MediaGallery";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
-import { data } from "autoprefixer";
+import { CommentHttpService } from "@/src/services/posts/comment.service";
 
 interface ChildProps {
   onClose: (data: any) => void;
@@ -9,6 +9,18 @@ interface ChildProps {
 }
 
 const ReplyPost = (props: ChildProps) => {
+  const [inputContentComment, setInputContentComment] = useState("");
+  const commentService = new CommentHttpService();
+
+  const handleOnSubmit = (dataCommentSubmit: {
+    content: string,
+    postId: string
+  }) => {
+      commentService.postComment(dataCommentSubmit).subscribe(() => {
+        props.onClose;
+      })
+  }
+
   return (
     <div className="fixed flex items-center justify-center bg-slate-800 bg-opacity-50 top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full">
       <div className="relative w-full max-w-2xl max-h-full">
@@ -81,11 +93,16 @@ const ReplyPost = (props: ChildProps) => {
                   <label className="sr-only">Your message</label>
                   <div className="flex items-center py-1 rounded-lg">
                     <input
+                      value={inputContentComment}
+                      onChange={(e) => {
+                        setInputContentComment(e.currentTarget.value);
+                      }}
                       id="chat"
                       className="block p-2.5 w-full text-sm text-gray-900 rounded-lg bg-none  dark:text-white border-none focus:ring-0 "
                       placeholder="Your message..."
                     ></input>
                     <button
+                       onClick={() => handleOnSubmit({postId: props.dataPost._id, content: inputContentComment})}
                       type="button"
                       className="inline-flex w-[60px] h-7 justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50 border border-gray-400"
                     >
