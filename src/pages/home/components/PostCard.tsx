@@ -1,10 +1,17 @@
 import MediaGallery from "@/src/components/ui/MediaGallery";
+import ReplyPost from "@/src/components/ui/ReplyPost";
 import { PostPropI } from "@/src/context/model/post.model";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const PostCard = (postData: { data: PostPropI }) => {
+  const [showReplyModal, setShowReplyModal] = useState(false);
+
+  const handleReply = () => {
+    setShowReplyModal(!showReplyModal);
+  };
+
   return (
     <div className="flex flex-col mb-10 lg:px-0 px-4 max-w-[572px] ">
       <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
@@ -66,6 +73,7 @@ const PostCard = (postData: { data: PostPropI }) => {
                 </svg>
               </button>
               <button
+                onClick={handleReply}
                 type="button"
                 className="inline-flex w-8 h-8 justify-center items-center p-1 text-sm font-medium text-gray-600 bold rounded-full hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
               >
@@ -118,6 +126,7 @@ const PostCard = (postData: { data: PostPropI }) => {
           </div>
         </div>
       </div>
+      {showReplyModal && <ReplyPost onClose={handleReply} dataPost={postData.data}></ReplyPost>}
     </div>
   );
 };
