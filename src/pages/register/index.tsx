@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
+import {
+  RegisterArgs,
+  register,
+} from "@/src/services/authentication/credentialAuth.services";
+import { useRouter } from "next/router";
 
 const Register = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setConfirmation] = useState("");
+
+  const onSubmit = () => {
+    if (passwordConfirmation === password) {
+      onRegister({ email, password, firstName, lastName });
+    }
+  };
+
+  const onRegister = (args: RegisterArgs) => {
+    register(args).then((res) => {
+      if (res.status === 201) {
+        router.push("/login");
+      }
+    });
+  };
+
   return (
     <div>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -28,11 +54,53 @@ const Register = () => {
                     Your email
                   </label>
                   <input
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
                     type="email"
                     name="email"
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Your FirstName
+                  </label>
+                  <input
+                    value={firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                    }}
+                    type="text"
+                    name="email"
+                    id="email"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="first name"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Your LastName
+                  </label>
+                  <input
+                    value={lastName}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
+                    type="text"
+                    name="email"
+                    id="email"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="last name"
                   />
                 </div>
                 <div>
@@ -43,6 +111,10 @@ const Register = () => {
                     Password
                   </label>
                   <input
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                     type="password"
                     name="password"
                     id="password"
@@ -58,6 +130,10 @@ const Register = () => {
                     Confirm password
                   </label>
                   <input
+                    value={passwordConfirmation}
+                    onChange={(e) => {
+                      setConfirmation(e.target.value);
+                    }}
                     type="confirm-password"
                     name="confirm-password"
                     id="confirm-password"
@@ -90,7 +166,10 @@ const Register = () => {
                   </div>
                 </div>
                 <button
-                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSubmit();
+                  }}
                   className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Create an account

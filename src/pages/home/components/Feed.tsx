@@ -1,5 +1,5 @@
 import { postsPerPage } from "@/src/constants";
-import { PostPropI } from "@/src/context/model/post.model";
+import { PostPropDisplayI, PostPropI } from "@/src/context/model/post.model";
 import { AuthHttpService } from "@/src/services/authentication/httpAuth.service";
 import { FeedHttpService } from "@/src/services/newfeed/httpFeed.service";
 import { useSession } from "next-auth/react";
@@ -18,6 +18,10 @@ const Feed = () => {
   const [currentUser, setCurrentUser] = useState<any>({});
   const authHttpService = new AuthHttpService();
 
+  // const setFeedPostsData = (data: PostPropI[]): PostPropDisplayI[] => {
+
+  // };
+
   useEffect(() => {
     if (session) {
       authHttpService.getCurrentUser().subscribe((data) => {
@@ -28,6 +32,7 @@ const Feed = () => {
 
   useEffect(() => {
     feedApiService.getPublicPosts(page, postsPerPage).subscribe((data) => {
+      console.log(data);
       setFeedPosts(data);
     });
   }, []);

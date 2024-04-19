@@ -8,6 +8,7 @@ import { FeedHttpService } from "@/src/services/newfeed/httpFeed.service";
 import { PostHttpService } from "@/src/services/post/httpPost.service";
 
 const Post = (postData: { data: PostPropI }) => {
+  console.log(postData);
   const feedApiService = new FeedHttpService();
   const postApiService = new PostHttpService();
 
@@ -20,7 +21,7 @@ const Post = (postData: { data: PostPropI }) => {
   };
 
   useEffect(() => {
-    feedApiService.getAllPostCommets(postData.data._id).subscribe((data) => {
+    feedApiService.getAllPostComments(postData.data._id).subscribe((data) => {
       setComments(data);
     });
   }, []);
