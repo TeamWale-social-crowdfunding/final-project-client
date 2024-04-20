@@ -21,13 +21,13 @@ const products = [
   {
     name: "Integrations",
     description: "Connect with third-party tools",
-    href: "#",
+    href: "",
     icon: SquaresPlusIcon,
   },
   {
     name: "Automations",
     description: "Build strategic funnels that will convert",
-    href: "#",
+    href: "",
     icon: ArrowPathIcon,
   },
 ];
@@ -82,7 +82,7 @@ export default function Example() {
           aria-label="Global"
         >
           <div className="flex w-14 ">
-            <a href="#" className="-m-1.5 p-1.5">
+            <a href="" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <Image
                 src={logo}
@@ -142,7 +142,7 @@ export default function Example() {
               </button>
             </Link>
 
-            <Link href="/" className="w-[20%] h-full">
+            <Link href="" className="w-[20%] h-full">
               <button
                 onClick={handleCreatePostOpen}
                 type="button"
@@ -223,7 +223,7 @@ export default function Example() {
           <div className="fixed inset-0 z-10" />
           <Dialog.Panel className=" fixed inset-y-0 right-0 z-[99] w-full overflow-y-auto bg-white px-6 py-6  sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-800">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
+              <a href="" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
                 <Image src={logo} alt="" className="h-12 w-auto" />
               </a>
@@ -268,7 +268,7 @@ export default function Example() {
                     )}
                   </Disclosure>
                   <a
-                    href="#"
+                    href=""
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     Features

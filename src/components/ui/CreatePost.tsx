@@ -28,6 +28,7 @@ const CreatePost = (props: ChildProps) => {
       setLoading(true);
       await createPost({ content, published: true, files }).then(() => {
         setLoading(false);
+        props.onClose;
       });
     } catch (error) {
       setLoading(false);
@@ -109,7 +110,7 @@ const CreatePost = (props: ChildProps) => {
           </form>
         </div>
       </div>
-      {loading && <Loading></Loading>}
+      {loading && <Loading background={true}></Loading>}
     </div>
   );
 };
