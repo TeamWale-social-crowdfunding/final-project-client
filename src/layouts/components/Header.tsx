@@ -7,9 +7,7 @@ import {
   SquaresPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import logo from "../../assets/img/logo.png";
 import { useSession, signOut } from "next-auth/react";
@@ -17,6 +15,7 @@ import { useRouter } from "next/router";
 import { AuthHttpService } from "@/src/services/authentication/httpAuth.service";
 import ButtonDarkMode from "@/src/components/ui/DarkModeButton";
 import Link from "next/link";
+import CreatePost from "@/src/components/ui/CreatePost";
 
 const products = [
   {
@@ -50,6 +49,20 @@ export default function Example() {
   const [currentUser, setCurrentUser] = useState<any>({});
   const authHttpService = new AuthHttpService();
   const router = useRouter();
+
+  const [showCreatePost, setShowCreatePost] = useState(false);
+
+  const handleCreatePostOpen = () => {
+    if (session) {
+      setShowCreatePost(!showCreatePost);
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const handleCreatePostClose = (value: boolean) => {
+    setShowCreatePost(!showCreatePost);
+  };
 
   useEffect(() => {
     if (session) {
@@ -131,6 +144,7 @@ export default function Example() {
 
             <Link href="/" className="w-[20%] h-full">
               <button
+                onClick={handleCreatePostOpen}
                 type="button"
                 className="inline-flex w-full h-full justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 bold rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
               >
@@ -151,49 +165,29 @@ export default function Example() {
               </button>
             </Link>
 
-            <Link href="/" className="w-[20%] h-full">
-              <button
-                type="button"
-                className="inline-flex w-full h-full justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 bold rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  className="w-8 h-8"
+            {session && (
+              <Link href="/profile" className="w-[20%] h-full">
+                <button
+                  type="button"
+                  className="inline-flex w-full h-full justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 bold rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                  />
-                </svg>
-              </button>
-            </Link>
-
-            <Link href="/profile" className="w-[20%] h-full">
-              <button
-                type="button"
-                className="inline-flex w-full h-full justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 bold rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  className="w-8 h-8"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                  />
-                </svg>
-              </button>
-            </Link>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
+                  </svg>
+                </button>
+              </Link>
+            )}
           </div>
 
           <div className="flex w-14 h-full">
@@ -299,13 +293,15 @@ export default function Example() {
                     </button>
                   )}
                 </div>
-                <div className="py-6">
-                </div>
+                <div className="py-6"></div>
               </div>
             </div>
           </Dialog.Panel>
         </Dialog>
       </header>
+      {showCreatePost && (
+        <CreatePost onClose={handleCreatePostClose}></CreatePost>
+      )}
     </div>
   );
 }

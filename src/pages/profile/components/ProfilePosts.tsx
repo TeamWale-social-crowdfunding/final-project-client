@@ -1,21 +1,33 @@
 import { FeedHttpService } from "@/src/services/newfeed/httpFeed.service";
 import React, { useEffect, useState } from "react";
 import PostCard from "../../home/components/PostCard";
+import Loading from "@/src/components/ui/Loading";
+import { finalize } from "rxjs";
 
 const ProfilePosts = (profilePosts: { data: string }) => {
   const feedService = new FeedHttpService();
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    feedService.getProfilePosts(profilePosts.data).subscribe((data) => {
-      setPosts(data);
+    setLoading(true);
+    feedService.getProfilePosts(profilePosts.data).subscribe({
+      next: (data) => {
+        setPosts(data);
+      },
+      complete: () => {
+        setLoading(false);
+      },
     });
-    console.log(profilePosts.data);
   }, []);
 
-  return <div> 
-    { posts[0] !== null && posts.map((post) => <PostCard data={post}></PostCard>)}
-  </div>
+  return (
+    <div>
+      {posts[0] !== null &&
+        posts.map((post) => <PostCard data={post}></PostCard>)}
+      {loading && <Loading></Loading>}
+    </div>
+  );
 };
 
 export default ProfilePosts;
