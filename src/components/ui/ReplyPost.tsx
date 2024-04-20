@@ -113,9 +113,9 @@ const ReplyPost = (props: ChildProps) => {
                         })
                       }
                       type="button"
-                      className="inline-flex w-[60px] h-7 justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50 border border-gray-400"
+                      className="inline-flex w-[100px] h-7 justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50 border border-gray-400"
                     >
-                      Post
+                      Comment
                     </button>
                   </div>
                 </form>
