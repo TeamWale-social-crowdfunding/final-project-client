@@ -17,7 +17,7 @@ const ReplyPost = (props: ChildProps) => {
     postId: string;
   }) => {
     commentService.postComment(dataCommentSubmit).subscribe((res) => {
-      if (res.status === 201) {
+      if (res.author_id) {
         props.onClose(true);
       } else {
         props.onClose(false);

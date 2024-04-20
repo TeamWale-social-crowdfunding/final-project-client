@@ -13,6 +13,18 @@ const PostCard = (postData: { data: PostPropDisplayI }) => {
     setShowReplyModal(!showReplyModal);
   };
 
+  const handleReplyClose = (value: boolean) => {
+    console.log("value");
+    console.log(value);
+    if (value) {
+      setPost({
+        ...post,
+        comments: [...post.comments, { ...post.comments[0] }],
+      });
+    }
+    setShowReplyModal(!showReplyModal);
+  };
+
   const postApiService = new PostHttpService();
 
   const [post, setPost] = useState(postData.data);
@@ -164,7 +176,7 @@ const PostCard = (postData: { data: PostPropDisplayI }) => {
         </div>
       </div>
       {showReplyModal && (
-        <ReplyPost onClose={handleReply} dataPost={post}></ReplyPost>
+        <ReplyPost onClose={handleReplyClose} dataPost={post}></ReplyPost>
       )}
     </div>
   );
