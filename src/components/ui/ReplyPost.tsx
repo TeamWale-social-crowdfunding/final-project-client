@@ -13,13 +13,17 @@ const ReplyPost = (props: ChildProps) => {
   const commentService = new CommentHttpService();
 
   const handleOnSubmit = (dataCommentSubmit: {
-    content: string,
-    postId: string
+    content: string;
+    postId: string;
   }) => {
-      commentService.postComment(dataCommentSubmit).subscribe(() => {
-        props.onClose;
-      })
-  }
+    commentService.postComment(dataCommentSubmit).subscribe((res) => {
+      if (res.status === 201) {
+        props.onClose(true);
+      } else {
+        props.onClose(false);
+      }
+    });
+  };
 
   return (
     <div className="fixed flex items-center justify-center bg-slate-800 bg-opacity-50 top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full">
@@ -102,7 +106,12 @@ const ReplyPost = (props: ChildProps) => {
                       placeholder="Your message..."
                     ></input>
                     <button
-                       onClick={() => handleOnSubmit({postId: props.dataPost._id, content: inputContentComment})}
+                      onClick={() =>
+                        handleOnSubmit({
+                          postId: props.dataPost._id,
+                          content: inputContentComment,
+                        })
+                      }
                       type="button"
                       className="inline-flex w-[60px] h-7 justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50 border border-gray-400"
                     >
