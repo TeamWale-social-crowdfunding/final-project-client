@@ -99,7 +99,6 @@ export interface PostPropDisplayI {
   createdAt: string;
   isDeleted: boolean;
   likes: {
-    isLiked: boolean;
     author_id: string;
     createdAt: string;
     isDeleted: boolean;
@@ -108,6 +107,7 @@ export interface PostPropDisplayI {
     updatedAt: string;
     _id: string;
   }[];
+  isLiked: boolean;
   likeCount: number;
   media?: {
     type: string;

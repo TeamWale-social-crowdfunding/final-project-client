@@ -10,7 +10,7 @@ import PostCard from "./PostCard";
 const Feed = () => {
   const feedApiService = new FeedHttpService();
 
-  const [feedPosts, setFeedPosts] = useState<PostPropI[]>([]);
+  const [feedPosts, setFeedPosts] = useState<PostPropDisplayI[]>([]);
 
   const [page, setPage] = useState(1);
 
@@ -18,9 +18,29 @@ const Feed = () => {
   const [currentUser, setCurrentUser] = useState<any>({});
   const authHttpService = new AuthHttpService();
 
-  // const setFeedPostsData = (data: PostPropI[]): PostPropDisplayI[] => {
-
-  // };
+  const transformPostData = (data: PostPropI[]): PostPropDisplayI[] => {
+    if (data) {
+      const setFeedPostsData: PostPropDisplayI[] = data.map(
+        (feedPost: PostPropI): PostPropDisplayI => {
+          const isLiked =
+            feedPost.likes.some((like) => like.author_id === currentUser.id) ||
+            false;
+          const likeCount =
+            feedPost.likes.filter((like) => like.unliked === false).length || 0;
+          return {
+            ...feedPost,
+            isLiked: isLiked,
+            likeCount: likeCount,
+          };
+        }
+      );
+      console.log("setFeedPostsData");
+      console.log(setFeedPostsData);
+      return setFeedPostsData;
+    } else {
+      return [];
+    }
+  };
 
   useEffect(() => {
     if (session) {
@@ -33,15 +53,15 @@ const Feed = () => {
   useEffect(() => {
     feedApiService.getPublicPosts(page, postsPerPage).subscribe((data) => {
       console.log(data);
-      setFeedPosts(data);
+      setFeedPosts(transformPostData(data));
     });
   }, []);
 
   const loadMore = () => {
     console.log(feedPosts);
     feedApiService.getPublicPosts(page, postsPerPage).subscribe((data) => {
-      setFeedPosts((prev: PostPropI[]) => {
-        return [...prev, ...data];
+      setFeedPosts((prev: PostPropDisplayI[]) => {
+        return [...prev, ...transformPostData(data)];
       });
       setPage((prevPage) => prevPage + 1);
     });
@@ -66,7 +86,7 @@ const Feed = () => {
   return (
     <div>
       {session && <NewPost data={{ avatar: currentUser.avatar }}></NewPost>}
-      {feedPosts.map((post: PostPropI, index: number) => (
+      {feedPosts.map((post: PostPropDisplayI, index: number) => (
         <PostCard data={post} key={post._id}></PostCard>
       ))}
     </div>

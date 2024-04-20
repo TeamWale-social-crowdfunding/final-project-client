@@ -1,12 +1,12 @@
 import MediaGallery from "@/src/components/ui/MediaGallery";
 import ReplyPost from "@/src/components/ui/ReplyPost";
-import { PostPropI } from "@/src/context/model/post.model";
+import { PostPropDisplayI } from "@/src/context/model/post.model";
 import { PostHttpService } from "@/src/services/post/httpPost.service";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
-const PostCard = (postData: { data: PostPropI }) => {
+const PostCard = (postData: { data: PostPropDisplayI }) => {
   const [showReplyModal, setShowReplyModal] = useState(false);
 
   const handleReply = () => {
@@ -15,11 +15,16 @@ const PostCard = (postData: { data: PostPropI }) => {
 
   const postApiService = new PostHttpService();
 
-  const [liked, setLiked] = useState(true);
+  const [post, setPost] = useState(postData.data);
 
   const handleLikeBtn = () => {
-    postApiService.likePost(postData.data._id).subscribe(() => {
-      setLiked(liked!);
+    postApiService.likePost(post._id).subscribe(() => {
+      const updatePost = {
+        ...post,
+        isLiked: !post.isLiked,
+        likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1,
+      };
+      setPost(updatePost);
     });
   };
 
@@ -30,8 +35,8 @@ const PostCard = (postData: { data: PostPropI }) => {
         <img
           className="w-10 h-10 rounded-full object-cover mr-2 shadow"
           src={
-            postData.data.user_id.avatar
-              ? postData.data.user_id.avatar
+            post.user_id.avatar
+              ? post.user_id.avatar
               : "https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
           }
           alt="avatar"
@@ -40,12 +45,10 @@ const PostCard = (postData: { data: PostPropI }) => {
         <div className="">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-gray-900 -mt-1 dark:text-white">
-              {postData.data.user_id.firstName +
-                " " +
-                postData.data.user_id.lastName}
+              {post.user_id.firstName + " " + post.user_id.lastName}
             </h3>
             <small className="text-sm text-gray-700 dark:text-gray-500">
-              {getTimeDiffString(postData.data.createdAt)}
+              {getTimeDiffString(post.createdAt)}
             </small>
           </div>
 
@@ -53,37 +56,59 @@ const PostCard = (postData: { data: PostPropI }) => {
             <div className=" absolute w-[2px] h-[90%] bg-gray-200 dark:bg-gray-700 left-[-30px] top-7"></div>
             <div>
               <p className=" text-gray-700 mb-2 text-sm dark:text-white">
-                {postData.data.content}
+                {post.content}
               </p>
             </div>
             <div>
-              {postData.data.media && (
-                <MediaGallery data={postData.data.media}></MediaGallery>
-              )}
+              {post.media && <MediaGallery data={post.media}></MediaGallery>}
             </div>
 
             <div className="flex items-center">
-              <button
-                onClick={handleLikeBtn}
-                id="likeBtn"
-                type="button"
-                className="like-btn inline-flex w-8 h-8 justify-center items-center p-1 text-sm font-medium text-gray-600 bold rounded-full hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  className="w-8 h-8"
+              {!post.isLiked ? (
+                <button
+                  onClick={handleLikeBtn}
+                  id="likeBtn"
+                  type="button"
+                  className="like-btn inline-flex w-8 h-8 justify-center items-center p-1 text-sm font-medium text-gray-600 bold rounded-full hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  onClick={handleLikeBtn}
+                  id="likeBtn"
+                  type="button"
+                  className="like-btn inline-flex w-8 h-8 justify-center items-center p-1 text-sm font-medium text-blue-600 bold rounded-full hover:bg-blue-100 dark:text-white dark:hover:text-white dark:hover:bg-blue-600 bg-blue-200 bg-opacity-50"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                    />
+                  </svg>
+                </button>
+              )}
               <button
                 onClick={handleReply}
                 type="button"
@@ -124,14 +149,14 @@ const PostCard = (postData: { data: PostPropI }) => {
                 </svg>
               </button>
             </div>
-            <Link href={`/post?postId=${postData.data._id}`}>
+            <Link href={`/post?postId=${post._id}`}>
               <div className="flex items-center my-2 ">
                 <div className="text-gray-600 -mt-1 dark:text-white text-xs">
-                  {`${postData.data.comments?.length} reply`}{" "}
+                  {`${post.comments?.length} reply`}{" "}
                 </div>
                 <div className="bg-gray-600 w-1 h-1 rounded-full m-2"></div>
                 <div className="text-gray-600 -mt-1 dark:text-white text-xs">
-                  {`${postData.data.likes?.length} likes`}{" "}
+                  {`${post.likeCount} likes`}{" "}
                 </div>
               </div>
             </Link>
@@ -139,7 +164,7 @@ const PostCard = (postData: { data: PostPropI }) => {
         </div>
       </div>
       {showReplyModal && (
-        <ReplyPost onClose={handleReply} dataPost={postData.data}></ReplyPost>
+        <ReplyPost onClose={handleReply} dataPost={post}></ReplyPost>
       )}
     </div>
   );
