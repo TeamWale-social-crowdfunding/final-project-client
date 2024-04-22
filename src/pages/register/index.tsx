@@ -6,6 +6,10 @@ import {
   register,
 } from "@/src/services/authentication/credentialAuth.services";
 import { useRouter } from "next/router";
+import {
+  CreateChatUserArg,
+  createChatUser,
+} from "@/src/services/chat/chat.http.service";
 
 const Register = () => {
   const router = useRouter();
@@ -24,6 +28,15 @@ const Register = () => {
   const onRegister = (args: RegisterArgs) => {
     register(args).then((res) => {
       if (res.status === 201) {
+        const user: CreateChatUserArg = {
+          avatar: "https://avatar.iran.liara.run/public",
+          username: res.data.email,
+          secret: password,
+          email: res.data.email,
+          first_name: res.data.firstName,
+          last_name: res.data.lastName,
+        };
+        createChatUser(user);
         router.push("/login");
       }
     });

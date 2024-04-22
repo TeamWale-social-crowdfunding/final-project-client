@@ -37,6 +37,7 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
           }
 
           if ((resp.status = 201)) {
+            console.log("Login Success in NextAuth");
             return resp.data;
           } else {
             return null;

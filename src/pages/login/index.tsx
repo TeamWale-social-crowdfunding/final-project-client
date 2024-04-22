@@ -3,6 +3,10 @@ import Image from "next/image";
 import logo from "../../assets/img/logo.png";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import {
+  LoginChatUserArg,
+  loginChat,
+} from "@/src/services/chat/chat.http.service";
 
 const Login = () => {
   /**
@@ -25,11 +29,23 @@ const Login = () => {
       email: userInfo.email,
       password: userInfo.password,
       redirect: false,
+    }).then(() => {
+      const chatUser: LoginChatUserArg = {
+        username: userInfo.email,
+        secret: userInfo.password,
+      };
+      loginChat(chatUser);
     });
   };
 
   const handleSigninWithGoogle = () => {
-    signIn("google");
+    signIn("google").then((res) => {
+      const chatUser: LoginChatUserArg = {
+        username: userInfo.email,
+        secret: "google",
+      };
+      loginChat(chatUser);
+    });
   };
   return (
     <div>
