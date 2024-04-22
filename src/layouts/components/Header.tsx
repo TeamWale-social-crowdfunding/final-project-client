@@ -16,6 +16,7 @@ import { AuthHttpService } from "@/src/services/authentication/httpAuth.service"
 import ButtonDarkMode from "@/src/components/ui/DarkModeButton";
 import Link from "next/link";
 import CreatePost from "@/src/components/ui/CreatePost";
+import { clearChatUser } from "@/src/utils/sessionStore";
 
 const products = [
   {
@@ -279,7 +280,10 @@ export default function Example() {
                 <div className="py-6">
                   {session ? (
                     <button
-                      onClick={() => signOut()}
+                      onClick={() => {
+                        signOut();
+                        clearChatUser();
+                      }}
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       Sign out
