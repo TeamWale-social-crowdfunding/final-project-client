@@ -10,36 +10,104 @@ import {
   CreateChatUserArg,
   createChatUser,
 } from "@/src/services/chat/chat.http.service";
+import { EToastStatus } from "@/src/constants";
+import { ToastMessage } from "@/src/components/ui/interface/component-ui.i";
+import Toast from "@/src/components/ui/toast/Toast";
+import { ERegisterStatus } from "./register.i";
 
 const Register = () => {
   const router = useRouter();
+  const [acceptConditional, setAcceptConditional] = useState(false);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setConfirmation] = useState("");
+  //handle toast
+  const [displayToast, setDisplayToast] = useState(false);
+  const [displayToastMessage, setDisplayToastMessage] = useState<ToastMessage>({
+    message: ERegisterStatus.FAILURE,
+    status: EToastStatus.ERROR,
+  });
+  const handleCloseToast = () => {
+    setDisplayToast(false);
+  };
 
   const onSubmit = () => {
-    if (passwordConfirmation === password) {
+    //check input fields
+    if (
+      email === "" ||
+      firstName === "" ||
+      lastName === "" ||
+      password === "" ||
+      passwordConfirmation === ""
+    ) {
+      const message: ToastMessage = {
+        message: ERegisterStatus.INVALID_FORM,
+        status: EToastStatus.WARNING,
+      };
+      setDisplayToastMessage(message);
+      setDisplayToast(true);
+      return;
+    }
+
+    //check valid password
+    if (passwordConfirmation !== password) {
+      const message: ToastMessage = {
+        message: ERegisterStatus.WRONG_PASSWORD,
+        status: EToastStatus.WARNING,
+      };
+      setDisplayToastMessage(message);
+      setDisplayToast(true);
+      return;
+    }
+    //check accept conditions
+    if (!acceptConditional) {
+      const message: ToastMessage = {
+        message: ERegisterStatus.SHOULD_ACCEPT,
+        status: EToastStatus.WARNING,
+      };
+      setDisplayToastMessage(message);
+      setDisplayToast(true);
+      return;
+    } else {
       onRegister({ email, password, firstName, lastName });
     }
   };
 
   const onRegister = (args: RegisterArgs) => {
-    register(args).then((res) => {
-      if (res.status === 201) {
-        const user: CreateChatUserArg = {
-          avatar: "https://avatar.iran.liara.run/public",
-          username: res.data.email,
-          secret: password,
-          email: res.data.email,
-          first_name: res.data.firstName,
-          last_name: res.data.lastName,
-        };
-        createChatUser(user);
-        router.push("/login");
-      }
-    });
+    register(args)
+      .then((res) => {
+        if (res.status === 201) {
+          const user: CreateChatUserArg = {
+            avatar: "https://avatar.iran.liara.run/public",
+            username: res.data.email,
+            secret: password,
+            email: res.data.email,
+            first_name: res.data.firstName,
+            last_name: res.data.lastName,
+          };
+          const message: ToastMessage = {
+            message: ERegisterStatus.SUCCESS,
+            status: EToastStatus.OK,
+          };
+          setDisplayToastMessage(message);
+          setDisplayToast(true);
+          createChatUser(user);
+          router.push("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 422) {
+          const message: ToastMessage = {
+            message: ERegisterStatus.EMAIL_REGISTERED,
+            status: EToastStatus.ERROR,
+          };
+          setDisplayToastMessage(message);
+          setDisplayToast(true);
+        }
+      });
   };
 
   return (
@@ -147,7 +215,7 @@ const Register = () => {
                     onChange={(e) => {
                       setConfirmation(e.target.value);
                     }}
-                    type="confirm-password"
+                    type="password"
                     name="confirm-password"
                     id="confirm-password"
                     placeholder="••••••••"
@@ -157,7 +225,10 @@ const Register = () => {
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
-                      id="terms"
+                      checked={acceptConditional}
+                      onClick={() => {
+                        setAcceptConditional(!acceptConditional);
+                      }}
                       aria-describedby="terms"
                       type="checkbox"
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
@@ -190,7 +261,7 @@ const Register = () => {
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Already have an account?{" "}
                   <a
-                    href="#"
+                    href="login"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Login here
@@ -201,6 +272,12 @@ const Register = () => {
           </div>
         </div>
       </section>
+      {displayToast && (
+        <Toast
+          dataPost={displayToastMessage}
+          onClose={handleCloseToast}
+        ></Toast>
+      )}
     </div>
   );
 };

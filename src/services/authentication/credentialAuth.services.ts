@@ -27,13 +27,6 @@ export const googleAuth = async (data: GoogleAuthDto) => {
   return res;
 };
 
-export interface RegisterArgs {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
-
 export const register = async (data: RegisterArgs) => {
   const res = await authApi.post(
     "auth/users/register",
@@ -42,3 +35,10 @@ export const register = async (data: RegisterArgs) => {
   );
   return res;
 };
+
+export interface RegisterArgs {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}

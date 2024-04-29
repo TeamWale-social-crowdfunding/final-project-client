@@ -7,6 +7,10 @@ import {
   LoginChatUserArg,
   loginChat,
 } from "@/src/services/chat/chat.http.service";
+import Toast from "@/src/components/ui/toast/Toast";
+import { ELoginStatus } from "./login.i";
+import { ToastMessage } from "@/src/components/ui/interface/component-ui.i";
+import { EToastStatus } from "@/src/constants";
 
 const Login = () => {
   /**
@@ -14,12 +18,44 @@ const Login = () => {
    */
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+  const [loginMethod, setLoginMethod] = useState("google");
+
+  //handle toast
+  const [displayToast, setDisplayToast] = useState(false);
+  const [displayToastMessage, setDisplayToastMessage] = useState<ToastMessage>({
+    message: ELoginStatus.FAILURE,
+    status: EToastStatus.ERROR,
+  });
+  const handleToastLogin = () => {
+    if (status == "authenticated") {
+      const message: ToastMessage = {
+        message: ELoginStatus.SUCCESS,
+        status: EToastStatus.OK,
+      };
+      setDisplayToastMessage(message);
+    } else {
+      const message: ToastMessage = {
+        message: ELoginStatus.FAILURE,
+        status: EToastStatus.ERROR,
+      };
+      setDisplayToastMessage(message);
+    }
+    setDisplayToast(true);
+  };
+  const handleCloseToast = () => {
+    setDisplayToast(false);
+  };
 
   if (status == "authenticated") {
+    const chatUser: LoginChatUserArg = {
+      username: session.user?.email || userInfo.email,
+      secret: loginMethod == "credentials" ? userInfo.password : "google",
+    };
+    loginChat(chatUser);
     router.push("/");
   }
 
-  const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const handleSiginWithCredential: React.MouseEventHandler<
     HTMLButtonElement
   > = async (e) => {
@@ -30,11 +66,7 @@ const Login = () => {
       password: userInfo.password,
       redirect: false,
     }).then(() => {
-      const chatUser: LoginChatUserArg = {
-        username: userInfo.email,
-        secret: userInfo.password,
-      };
-      loginChat(chatUser);
+      handleToastLogin();
     });
   };
 
@@ -44,7 +76,9 @@ const Login = () => {
         username: userInfo.email,
         secret: "google",
       };
-      loginChat(chatUser);
+      loginChat(chatUser).then(() => {
+        handleToastLogin();
+      });
     });
   };
   return (
@@ -127,7 +161,10 @@ const Login = () => {
                   </a>
                 </div>
                 <button
-                  onClick={handleSiginWithCredential}
+                  onClick={(e) => {
+                    setLoginMethod("credentials");
+                    handleSiginWithCredential(e);
+                  }}
                   type="submit"
                   className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
@@ -136,7 +173,10 @@ const Login = () => {
                 <button
                   type="button"
                   className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 w-full justify-center"
-                  onClick={handleSigninWithGoogle}
+                  onClick={() => {
+                    setLoginMethod("google");
+                    handleSigninWithGoogle();
+                  }}
                 >
                   <svg
                     className="w-4 h-4 mr-2"
@@ -167,6 +207,12 @@ const Login = () => {
           </div>
         </div>
       </section>
+      {displayToast && (
+        <Toast
+          dataPost={displayToastMessage}
+          onClose={handleCloseToast}
+        ></Toast>
+      )}
     </div>
   );
 };
