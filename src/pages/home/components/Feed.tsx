@@ -59,7 +59,7 @@ const Feed = () => {
 
   const loadMore = () => {
     console.log(feedPosts);
-    feedApiService.getPublicPosts(page, postsPerPage).subscribe((data) => {
+    feedApiService.getPublicPosts(page + 1, postsPerPage).subscribe((data) => {
       setFeedPosts((prev: PostPropDisplayI[]) => {
         return [...prev, ...transformPostData(data)];
       });

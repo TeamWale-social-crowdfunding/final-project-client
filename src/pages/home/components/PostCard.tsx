@@ -2,12 +2,26 @@ import MediaGallery from "@/src/components/ui/MediaGallery";
 import ReplyPost from "@/src/components/ui/ReplyPost";
 import { PostPropDisplayI } from "@/src/context/model/post.model";
 import { PostHttpService } from "@/src/services/post/httpPost.service";
+import { deletePost } from "@/src/services/post/postPomiseHandle";
 import { getTimeDiffString } from "@/src/utils/createdDayTransform";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
+import { ERegisterStatus } from "../../register/register.i";
+import { EToastStatus } from "@/src/constants";
+import { ToastMessage } from "@/src/components/ui/interface/component-ui.i";
+import Toast from "@/src/components/ui/toast/Toast";
 
 const PostCard = (postData: { data: PostPropDisplayI }) => {
   const [showReplyModal, setShowReplyModal] = useState(false);
+  //handle toast
+  const [displayToast, setDisplayToast] = useState(false);
+  const [displayToastMessage, setDisplayToastMessage] = useState<ToastMessage>({
+    message: ERegisterStatus.FAILURE,
+    status: EToastStatus.ERROR,
+  });
+  const handleCloseToast = () => {
+    setDisplayToast(false);
+  };
 
   const handleReply = () => {
     setShowReplyModal(!showReplyModal);
@@ -23,6 +37,36 @@ const PostCard = (postData: { data: PostPropDisplayI }) => {
       });
     }
     setShowReplyModal(!showReplyModal);
+  };
+
+  const handleDeletePost = async () => {
+    await deletePost(postData.data._id)
+      .then((res) => {
+        console.log(res);
+        if (res && res.status === 200) {
+          const message: ToastMessage = {
+            message: ERegisterStatus.DELETE_POST_SUCCESS,
+            status: EToastStatus.OK,
+          };
+          setDisplayToastMessage(message);
+          setDisplayToast(true);
+        } else {
+          const message: ToastMessage = {
+            message: ERegisterStatus.DELETE_POST_FAILURE,
+            status: EToastStatus.ERROR,
+          };
+          setDisplayToastMessage(message);
+          setDisplayToast(true);
+        }
+      })
+      .catch(() => {
+        const message: ToastMessage = {
+          message: ERegisterStatus.DELETE_POST_FAILURE,
+          status: EToastStatus.ERROR,
+        };
+        setDisplayToastMessage(message);
+        setDisplayToast(true);
+      });
   };
 
   const postApiService = new PostHttpService();
@@ -49,7 +93,7 @@ const PostCard = (postData: { data: PostPropDisplayI }) => {
           src={
             post.user_id.avatar
               ? post.user_id.avatar
-              : "https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+              : "https://avatar.iran.liara.run/public"
           }
           alt="avatar"
         />
@@ -59,9 +103,17 @@ const PostCard = (postData: { data: PostPropDisplayI }) => {
             <h3 className="text-sm font-semibold text-gray-900 -mt-1 dark:text-white">
               {post.user_id.firstName + " " + post.user_id.lastName}
             </h3>
-            <small className="text-sm text-gray-700 dark:text-gray-500">
-              {getTimeDiffString(post.createdAt)}
-            </small>
+            <div>
+              <small className="text-sm text-gray-700 dark:text-gray-500">
+                {getTimeDiffString(post.createdAt)}
+              </small>
+              <button
+                onClick={handleDeletePost}
+                className=" ml-2 bg-red text-gray-900 dark:text-white"
+              >
+                x
+              </button>
+            </div>
           </div>
 
           <div className="relative">
@@ -177,6 +229,12 @@ const PostCard = (postData: { data: PostPropDisplayI }) => {
       </div>
       {showReplyModal && (
         <ReplyPost onClose={handleReplyClose} dataPost={post}></ReplyPost>
+      )}
+      {displayToast && (
+        <Toast
+          dataPost={displayToastMessage}
+          onClose={handleCloseToast}
+        ></Toast>
       )}
     </div>
   );

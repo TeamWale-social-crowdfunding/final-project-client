@@ -10,7 +10,7 @@ const Comment = (commentData: { data: any }) => {
       <div className="flex items-start pt-4">
         <img
           className="w-10 h-10 rounded-full object-cover mr-2 shadow"
-          src={mockAvatarUser[1]}
+          src={"https://avatar.iran.liara.run/public"}
           alt="avatar"
         />
         <div className=" w-full">

@@ -10,7 +10,7 @@ interface ChildProps {
 
 const Toast = (props: ChildProps) => {
   return (
-    <div className="fixed flex items-end justify-end top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full">
+    <div className="fixed right-4 bottom-4 ">
       {props.dataPost.status === EToastStatus.OK && (
         <div
           id="toast-success"

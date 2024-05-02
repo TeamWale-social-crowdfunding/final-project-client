@@ -21,7 +21,11 @@ const NewPost = (newpostData: { data: any }) => {
         <div className="flex items-center py-1 rounded-lg">
           <img
             className="w-10 h-10 rounded-full"
-            src={newpostData.data.avatar}
+            src={
+              newpostData.data.avatar
+                ? newpostData.data.avatar
+                : "https://avatar.iran.liara.run/public"
+            }
             alt="Rounded avatar"
           />
           <input

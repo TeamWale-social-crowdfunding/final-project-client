@@ -1,6 +1,10 @@
 import { createPost } from "@/src/services/post/postPomiseHandle";
 import React, { ChangeEvent, useState } from "react";
 import Loading from "./Loading";
+import { ToastMessage } from "@/src/components/ui/interface/component-ui.i";
+import { ERegisterStatus } from "@/src/pages/register/register.i";
+import { EToastStatus } from "@/src/constants";
+import Toast from "@/src/components/ui/toast/Toast";
 
 interface ChildProps {
   onClose: (data: any) => void;
@@ -10,6 +14,15 @@ const CreatePost = (props: ChildProps) => {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
+  //handle toast
+  const [displayToast, setDisplayToast] = useState(false);
+  const [displayToastMessage, setDisplayToastMessage] = useState<ToastMessage>({
+    message: ERegisterStatus.FAILURE,
+    status: EToastStatus.ERROR,
+  });
+  const handleCloseToast = () => {
+    setDisplayToast(false);
+  };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.files);
@@ -27,11 +40,24 @@ const CreatePost = (props: ChildProps) => {
       console.log(files);
       setLoading(true);
       await createPost({ content, published: true, files }).then(() => {
+        console.log("created Post");
+        const message: ToastMessage = {
+          message: ERegisterStatus.CREATE_POST_SUCCESS,
+          status: EToastStatus.OK,
+        };
+        setDisplayToastMessage(message);
+        setDisplayToast(true);
+        props.onClose(true);
         setLoading(false);
-        props.onClose;
       });
     } catch (error) {
       setLoading(false);
+      const message: ToastMessage = {
+        message: ERegisterStatus.CREATE_POST_FAILURE,
+        status: EToastStatus.ERROR,
+      };
+      setDisplayToastMessage(message);
+      setDisplayToast(true);
       console.error("Error uploading files:", error);
     }
   };
@@ -111,6 +137,12 @@ const CreatePost = (props: ChildProps) => {
         </div>
       </div>
       {loading && <Loading background={true}></Loading>}
+      {displayToast && (
+        <Toast
+          dataPost={displayToastMessage}
+          onClose={handleCloseToast}
+        ></Toast>
+      )}
     </div>
   );
 };

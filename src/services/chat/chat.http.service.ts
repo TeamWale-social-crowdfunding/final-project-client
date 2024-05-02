@@ -14,8 +14,8 @@ export interface CreateChatUserArg {
   last_name: string;
 }
 
-export const CHAT_ENGINE_PRIVATE_KEY = "5ef3fab2-dac7-48c8-845f-0899e3a1874e";
-export const CHAT_ENGINE_PROJECT_ID = "4cc9e7b0-705d-4e6e-9610-29879ab595b8";
+export const CHAT_ENGINE_PRIVATE_KEY = "385516a2-30c1-42f9-86a0-c2c9c3ab1c3e";
+export const CHAT_ENGINE_PROJECT_ID = "ef8de218-f214-4f6d-a96a-8924f7fcb817";
 
 export const createChatUser = async (arg: CreateChatUserArg) => {
   console.log("Starting createChatUser");

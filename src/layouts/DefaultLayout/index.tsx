@@ -1,7 +1,5 @@
 import React from "react";
 import Header from "../components/Header";
-import RightBar from "../components/RightBar";
-import SideBar from "../components/SideBar";
 
 const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
   return (

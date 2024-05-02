@@ -17,6 +17,10 @@ import ButtonDarkMode from "@/src/components/ui/DarkModeButton";
 import Link from "next/link";
 import CreatePost from "@/src/components/ui/CreatePost";
 import { clearChatUser } from "@/src/utils/sessionStore";
+import { ToastMessage } from "@/src/components/ui/interface/component-ui.i";
+import { ERegisterStatus } from "@/src/pages/register/register.i";
+import { EToastStatus } from "@/src/constants";
+import Toast from "@/src/components/ui/toast/Toast";
 
 const products = [
   {
@@ -53,6 +57,16 @@ export default function Example() {
 
   const [showCreatePost, setShowCreatePost] = useState(false);
 
+  //handle toast
+  const [displayToast, setDisplayToast] = useState(false);
+  const [displayToastMessage, setDisplayToastMessage] = useState<ToastMessage>({
+    message: ERegisterStatus.FAILURE,
+    status: EToastStatus.ERROR,
+  });
+  const handleCloseToast = () => {
+    setDisplayToast(false);
+  };
+
   const handleCreatePostOpen = () => {
     if (session) {
       setShowCreatePost(!showCreatePost);
@@ -62,7 +76,16 @@ export default function Example() {
   };
 
   const handleCreatePostClose = (value: boolean) => {
-    setShowCreatePost(!showCreatePost);
+    if (value === true) {
+      const message: ToastMessage = {
+        message: ERegisterStatus.CREATE_POST_SUCCESS,
+        status: EToastStatus.OK,
+      };
+      setDisplayToastMessage(message);
+      setDisplayToast(true);
+    }
+    setShowCreatePost(false);
+    // router.forward("/");
   };
 
   useEffect(() => {
@@ -121,7 +144,7 @@ export default function Example() {
               </button>
             </Link>
 
-            <Link href="/search" className="w-[20%] h-full">
+            {/* <Link href="/search" className="w-[20%] h-full">
               <button
                 type="button"
                 className="inline-flex w-full h-full justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 bold rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
@@ -141,7 +164,7 @@ export default function Example() {
                   />
                 </svg>
               </button>
-            </Link>
+            </Link> */}
 
             <Link href="" className="w-[20%] h-full">
               <button
@@ -184,6 +207,32 @@ export default function Example() {
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
+                  </svg>
+                </button>
+              </Link>
+            )}
+            {session && (
+              <Link href="/chat" className="w-[20%] h-full">
+                <button
+                  type="button"
+                  className="inline-flex w-full h-full justify-center items-center px-4 py-2 text-sm font-medium text-gray-400 bold rounded-lg hover:bg-gray-100 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 bg-opacity-50"
+                >
+                  <svg
+                    className="w-8 h-8"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"
                     />
                   </svg>
                 </button>
@@ -302,6 +351,12 @@ export default function Example() {
             </div>
           </Dialog.Panel>
         </Dialog>
+        {displayToast && (
+          <Toast
+            dataPost={displayToastMessage}
+            onClose={handleCloseToast}
+          ></Toast>
+        )}
       </header>
       {showCreatePost && (
         <CreatePost onClose={handleCreatePostClose}></CreatePost>

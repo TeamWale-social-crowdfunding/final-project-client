@@ -34,3 +34,16 @@ export const createPost = async (data: CreatePostArgs) => {
     console.error("Error uploading files:", error);
   }
 };
+
+export const deletePost = async (postId: string) => {
+  try {
+    const res = await postApi.patch(
+      "/delete",
+      { post_id: postId },
+      { withCredentials: true }
+    );
+    return res;
+  } catch (error) {
+    console.error("Error delete post:", error);
+  }
+};
